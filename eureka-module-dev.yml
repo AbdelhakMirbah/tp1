@@ -1,4 +1,41 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka-server
+
 eureka:
+  instance:
+    hostname: localhost
+  
   client:
+    # STANDALONE SERVER CONFIG
+    # False because this server is the registry, it doesn't need to register with itself.
     register-with-eureka: false
     fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+  server:
+    # DEV PERFORMANCE TUNING
+    # 1. Turn off self-preservation. 
+    # In Dev, we want services to disappear immediately if we kill them.
+    enable-self-preservation: false
+
+    # 2. Check for dead nodes every 2 seconds (Default is 60s).
+    # This updates the dashboard almost instantly when you stop a client.
+    eviction-interval-timer-in-ms: 2000
+
+    # 3. Don't wait for peers to sync (since there are none).
+    wait-time-in-ms-when-sync-empty: 0
+    
+    # 4. Response Cache Update
+    # Updates the read-only cache more frequently so clients see changes faster.
+    response-cache-update-interval-ms: 5000
+
+logging:
+  level:
+    # Reduce noise, but keep info to see registration events
+    com.netflix.eureka: INFO
+    com.netflix.discovery: INFO
