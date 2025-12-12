@@ -1,12 +1,12 @@
 server:
-  port: 9091
+  port: 8091
 
 spring:
   application:
-    name: user-service
+    name: product-service
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:file:~/user-db;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE
+    url: jdbc:h2:file:~/product-db;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE
     username: sa
     password: password
   jpa:
